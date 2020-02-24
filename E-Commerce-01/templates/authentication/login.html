@@ -1,0 +1,134 @@
+{% extends 'layout.html' %}
+{% block title %} Login {% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+
+        @media only screen and (min-width: 1501px) {
+            .content-holder {
+                margin-right: auto;
+                margin-left: auto;
+                width: 20%;
+            }
+        }
+
+        @media only screen and (max-width: 450px) {
+            .content-holder {
+                margin-right: auto;
+                margin-left: auto;
+                width: 30%;
+            }
+        }
+
+
+        @media screen and (max-width: 1500px) and (min-width: 455px) {
+            .content-holder {
+                margin-right: auto;
+                margin-left: auto;
+                width: 50%;
+            }
+        }
+
+        form {
+            margin-top: 8%;
+        }
+
+        input[type="text"],
+        select.form-control {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #000000;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        input[type="text"]:focus,
+        select.form-control:focus {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        input[type="password"],
+        select.form-control {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #000000;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        input[type="password"]:focus,
+        select.form-control:focus {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        input[type="email"],
+        select.form-control {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #000000;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        input[type="email"]:focus,
+        select.form-control:focus {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .control-label {
+            font-weight: 700 !important;
+        }
+
+        .login-form-button {
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            font-weight: 700;
+            letter-spacing: 3px;
+            border: none;
+
+        }
+
+        .login-form-button:hover {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #000000;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        #createaccount-link {
+            color: black;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        #createaccount-link:hover {
+            text-decoration: none;
+        }
+
+    </style>
+{% endblock %}
+{% block content %}
+    <form method="POST">
+        <div class="content-holder">
+            <div class="form-group">
+                <label for="name" class="control-label">Email</label>
+                <input type="text" name="email" class="form-control" id="email">
+            </div>
+            <div class="form-group">
+                <label for="password" class="control-label">Password</label>
+                <input type="password" name="password" class="form-control" id="password">
+            </div>
+            <button class="btn login-form-button" type="submit">LOGIN</button>
+            <a id="createaccount-link" style="text-align: center;" href="{{ url_for('register') }}">Create Account</a>
+        </div>
+    </form>
+{% endblock %}
