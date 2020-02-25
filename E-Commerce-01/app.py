@@ -1,11 +1,11 @@
-from flask import Flask, render_template, url_for, request, session, redirect
+from flask import Flask, render_template, url_for, request, session, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from enum import Enum
 import datetime
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://python:1234@localhost/ecommerce-01' #URI to connec to database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/ecommerce' #URI to connec to database
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False    #removes annoying WARNING messages from console
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/' #This secures the session and keeps it from being accessible
 
@@ -38,12 +38,30 @@ class User(db.Model):
         self.password = password
         self.orders = orders
 
+class Cart(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    assoID = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.String(50), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    dateStarted = db.Column(db.DateTime, nullable=False)
+    size = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(50), nullable=False)
+
+    def __init__(self, assoID, price, quantity,size, dateStarted, name):
+        self.assoID = assoID
+        self.price = price
+        self.quantity = quantity
+        self.size = size
+        self.dateStarted = dateStarted
+        self.name = name
 
 class Orders(db.Model):
     __tablename__ = "orders"
 
     id = db.Column(db.Integer, primary_key=True)
-    trackingNumber = db.Column(db.String(90), nullable=True)
+    transactionNumber = db.Column(db.String(255), nullable=False)
+    trackingNumber = db.Column(db.String(90), nullable=False)
+    products = db.Column(db.String(255), nullable=False)
     orderStatus = db.Column(db.String(50), nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
 
@@ -53,6 +71,7 @@ class Orders(db.Model):
         self.trackingNumber = trackingNumber
         self.orderStatus = orderStatus
         self.user_id = user_id
+
 
 
 db.create_all()  # This creates all the classes references above
@@ -114,6 +133,51 @@ def register():
         db.session.commit()
     return render_template("authentication/register.html")
 
+@app.route('/updateCart', methods=['POST'])
+def updateCart():
+    if "loggedIN" not in session:
+        return redirect(url_for('login'))
+    carts = Cart.query.all()
+
+    itemsFound = Cart.query.filter_by(assoID=session['userID'])
+    if 'userID' in session:
+        for items in itemsFound:
+            if items.id == request.form.get('item_id'):
+                if items.size != request.form.get('size'):
+                    db.session.add(Cart(session['userID'], "35.00", request.form.get('quantity'), datetime.datetime.today(), request.form.get('size'), "PRODUCTEXAMPLE"))
+                    print('PRODUCT EXISTED BUT SIZES WHERE DIFFERENT CREATING NEW PRODUCT')
+                    return jsonify({'result': 'addedNewItem'})
+                else:
+                    print('PRODUCT EXISTS IN CART UPDATING QUANTITY')
+                    items.quantity = request.form.get('quantity')
+                    db.session.commit()
+                    return jsonify({'result': 'updatedQuantity'})
+            return jsonify({'result': 'success'})
+
+        db.session.add(Cart(session['userID'], "35.00", request.form.get('quantity'), request.form.get('size'), datetime.datetime.today(), "PRODUCTEXAMPLE"))
+        db.session.commit()
+        print('PRODUCT DID NOT EXIST')
+        return jsonify({'result': 'addedNewItem'})
+    return jsonify({'result': 'failure'})
+
+@app.route('/test')
+def test():
+    itemsFound = Cart.query.filter_by(assoID=session['userID'])
+    item_data = []
+
+    for item in itemsFound:
+        current_item = {
+            'id': item.id,
+            'assoID': item.assoID,
+            'price': item.price,
+            'quantity': item.quantity,
+            'dateStarted': item.dateStarted,
+            'size': item.size,
+            'name' : item.name
+        }
+        item_data.append(current_item)
+
+    return render_template('test.html', items=item_data)
 
 @app.errorhandler(404)
 def not_found(e):

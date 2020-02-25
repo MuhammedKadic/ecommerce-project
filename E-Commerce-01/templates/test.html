@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block title %} Home {% endblock %}
+{% block head %}
+{{ super() }}
+    <style type="text/css">
+
+
+    </style>
+{% endblock %}
+
+{% block content %}
+{% for item in items %}
+  <span>{{item.id}} || {{item.assoID}}  || {{item.price}} || {{item.quantity}} || {{item.dateStarted}} || {{item.size}} || {{item.name}}</span>
+{% endfor %}
+{% endblock %}
