@@ -4,278 +4,303 @@
     {{ super() }}
     <style type="text/css">
 
-      .container-images {
-          margin-right: auto;
-          margin-left: auto;
-          width: 80%;
-      }
-
-      .col {
-          text-align: center;
-      }
-
-      #product-title {
-          font-weight: 700;
-          letter-spacing: 0.025em;
-          margin-bottom: 0;
-          font-size: 1.2em;
-      }
-
-      #product-price {
-          font-weight: normal;
-          font-size: .9em;
-      }
-      .product-price {
-          font-weight: normal;
-          font-size: 1.2em;
-      }
-      .row {
-          justify-content: center !important;
-      }
-
-      .col {
-          margin-bottom: 25px;
-      }
-
-      #products {
-          color: black;
-          text-decoration: none;
-      }
-
-      #products:hover {
-          color: black;
-          text-decoration: none;
-      }
-
-      @media only screen and (max-width: 450px) {
-        .container {
-            display:flex;
-            flex-direction:column;
-            width: 100%;
+        .container-images {
+            margin-right: auto;
+            margin-left: auto;
+            width: 80%;
         }
 
-        .picture-side{
-          width: 100%;
+        .col {
+            text-align: center;
         }
-        .information-side {
-          width:100%;
+
+        #product-title {
+            font-weight: 700;
+            letter-spacing: 0.025em;
+            margin-bottom: 0;
+            font-size: 1.2em;
         }
-        .information-side h1 {
-          padding-top: 25px;
-          font-size: 1em;
-          font-weight: 700;
+
+        #product-price {
+            font-weight: normal;
+            font-size: .9em;
         }
-        .modal {
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
 
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-    float: right;
-  font-size: 28px;
-  font-weight: bold;
-  text-align:right;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-      @media only screen and (min-width: 451px) {
-        .container{
-          display:flex;
-          flex-direction:row;
+        .product-price {
+            font-weight: normal;
+            font-size: 1.2em;
         }
-        .modal {
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
 
-/* Modal Content */
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 60%;
-}
-}
+        .row {
+            justify-content: center !important;
+        }
 
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-    float: right;
-  font-size: 28px;
-  font-weight: bold;
-  text-align:right;
-}
+        .col {
+            margin-bottom: 25px;
+        }
 
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-.quantity-container{
-  display:flex;
-  flex-direction:row;
-  justify-content:center;
-}
-.quantity-container p {
-  margin-top:14px;
-  margin-right: 5px;
-}
-.quantity-container select {
-  border: none;
-}
-.quantity-container select:focus {
-  border: none;
-  outline: 0;
-}
-.quantity-container select:active {
-  border: none;
-}
-}
+        #products {
+            color: black;
+            text-decoration: none;
+        }
+
+        #products:hover {
+            color: black;
+            text-decoration: none;
+        }
+
+        @media only screen and (max-width: 450px) {
+            .container {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .picture-side {
+                width: 100%;
+            }
+
+            .information-side {
+                width: 100%;
+            }
+
+            .information-side h1 {
+                padding-top: 25px;
+                font-size: 1em;
+                font-weight: 700;
+            }
+
+            .modal {
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 100px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0, 0, 0); /* Fallback color */
+                background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content */
+            .modal-content {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+            }
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @media only screen and (min-width: 451px) {
+            .container {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .modal {
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 100px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0, 0, 0); /* Fallback color */
+                background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content */
+            .modal-content {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 60%;
+            }
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .quantity-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .quantity-container p {
+            margin-top: 14px;
+            margin-right: 5px;
+        }
+
+        .quantity-container select {
+            border: none;
+        }
+
+        .quantity-container select:focus {
+            border: none;
+            outline: 0;
+        }
+
+        .quantity-container select:active {
+            border: none;
+        }
+
+        }
     </style>
 {% endblock %}
 
 {% block content %}
-<div class="top-menu">
+    <div class="top-menu">
 
-</div>
+    </div>
     <div class="container-images">
-        <div class="row">
-            {% for i in range(1, 7) %}
-                <div class="col col-sm-3 col-5">
-                    <img class="img-fluid rounded" src="/static/images/image-{{i}}.png">
-                        <p id="product-title">PRODUCT NUMBER #{{ i }}</p>
-                        <p id="product-price">$35.00 USD</p>
-                        <button type="button"  class="btn btn-primary myBtn" name="button">Add to Cart</button>
-                        <div class="modal myModal" id="{{i}}" style="display:none">
+    <div class="row">
+        {% for i in range(1, 7) %}
+            <div class="col col-sm-3 col-5">
+                <img class="img-fluid rounded" src="/static/images/image-{{ i }}.png">
+                <p id="product-title">PRODUCT NUMBER #{{ i }}</p>
+                <p id="product-price">$35.00 USD</p>
+                <button type="button" class="btn btn-primary myBtn" name="button">Add to Cart</button>
+                <div class="modal myModal" id="{{ i }}" style="display:none">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="container">
-    <div class="picture-side">
-      <img class="img-fluid rounded" src="/static/images/image-{{i}}.png">
-    </div>
-    <div class="information-side" >
-      <h1>PRODUCT NUMBER #{{i}}</h1>
-      <p class="product-price">$35.00 USD</p>
-      <p>This is a sample of {{i}} this product offers custom wear and also keeps you warm.</p>
-      <div class="quantity-container">
-        <form class="form-inline">
-                <p class="my-1 mr-2" for="inlineFormCustomSelectPref">Quantity:</p>
-      <select class="{{i}}.quantity custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="">
-        {% for quantity in range(1, 101) %}
-        <option value="{{quantity}}">{{quantity}}</option>
-        {%endfor%}
-      </select>
-    </form>
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div class="container">
+                            <div class="picture-side">
+                                <img class="img-fluid rounded" src="/static/images/image-{{ i }}.png">
+                            </div>
+                            <div class="information-side">
+                                <h1>PRODUCT NUMBER #{{ i }}</h1>
+                                <p class="product-price">$35.00 USD</p>
+                                <p>This is a sample of {{ i }} this product offers custom wear and also keeps you
+                                    warm.</p>
+                                <div class="quantity-container">
+                                    <form class="form-inline">
+                                        <p class="my-1 mr-2" for="inlineFormCustomSelectPref">Quantity:</p>
+                                        <select class="custom.{{i}}.quantity custom-select my-1 mr-sm-2"
+                                                id="inlineFormCustomSelectPref" name="" onchange="">
+                                            {% for quantity in range(1, 16) %}
+                                                <option value="{{ quantity }}">{{ quantity }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </form>
 
-    </div><br>
-    <div class="quantity-container">
-      <form class="form-inline">
+                                </div>
+                                <br>
+                                <div class="quantity-container">
+                                    <form class="form-inline">
+                                        <p class="my-1 mr-2" for="inlineFormCustomSelectPref">Size:</p>
+                                        <select class="custom.{{i}}.size custom-select my-1 mr-sm-2"
+                                                id="inlineFormCustomSelectPref" name="">
+                                            <option value="XS">XS</option>
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                            <option value="XL">XL</option>
+                                        </select>
+                                    </form>
+                                </div>
+                                <br>
+                                {% if 'loggedIN' in session and session['loggedIN'] == True %}
+                                    <button type="button" style="width:30%;" id="{{ i }}" cart_id="{{ i }}"
+                                            class="addToCart btn btn-primary" name="button">Add to Cart
+                                    </button>
+                                {% else %}
+                                    <a href="{{ url_for('login') }}">
+                                        <button type="button" class="btn btn-primary" name="button">Login</button>
+                                    </a>
 
-    <p class="my-1 mr-2" for="inlineFormCustomSelectPref">Size:</p>
-    <select class="custom-select my-1 mr-sm-2 {{i}}.size" id="inlineFormCustomSelectPref" name="">
-      <option value="XS">XS</option>
-      <option value="S">S</option>
-      <option value="M">M</option>
-      <option value="L">L</option>
-      <option value="XL">XL</option>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
 
-    </select>
-    </form>
-  </div>
-      <br>
-      {% if 'loggedIN' in session and session['loggedIN'] == True %}
-      <button type="button" style="width:30%;" id="{{i}}" cart_id="{{i}}" class="addToCart btn btn-primary" name="button">Add to Cart</button>
-      {% else %}
-      <a href="{{url_for('login')}}"><button type="button" class="btn btn-primary" name="button">Login</button></a>
-
-      {% endif %}
-    </div>
-        </div>
-  </div>
-
-</div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 {% block scripts %}
-<script>
-$(document).ready(function(){
-  $('.addToCart').on('click', function() {
-    let item_id = $(this).attr('cart_id');
-    let quantity = $("."+item_id + '.quantity option:selected').text();
-    let size = $("."+item_id  + ".size option:selected").text();
+    <script>
+        $(document).ready(function () {
+            $('.addToCart').on('click', function () {
+                let item_id = $(this).attr('cart_id');
+                let quantity = $(".custom." + item_id + ".quantity").val();
+                if(quantity == undefined){
+                    quantity = 1;
+                }
+                let size = $(".custom." + item_id + ".size").val();
+                if(size == undefined){
+                    size = "XL";
+                }
 
-    req = $.ajax({
-      url: '/updateCart',
-      type: 'POST',
-      data: {
-        item_id: item_id,
-        quantity: quantity,
-        size: size
-      }
-    });
-  });
+                req = $.ajax({
+                    url: '/updateCart',
+                    type: 'POST',
+                    data: {
+                        item_id: item_id,
+                        quantity: quantity,
+                        size: size
+                    }
+                });
+            });
 
-  var custom_id;
-  $('.myBtn').click(function(){
-    custom_id = $(this).next().attr('id');
-    $(this).next().fadeIn(function(){
-      $(this).next().css({"display": "block"});
-    });
-  });
+            var custom_id;
+            $('.myBtn').click(function () {
+                custom_id = $(this).next().attr('id');
+                $(this).next().fadeIn(function () {
+                    $(this).next().css({"display": "block"});
+                });
+            });
 
-  $('.close').click(function(){
-    $('#' + custom_id).fadeOut('fast', function(){
-      $('#' + custom_id).css({"display": "none"});
-    });
-  });x
+            $('.close').click(function () {
+                $('#' + custom_id).fadeOut('fast', function () {
+                    $('#' + custom_id).css({"display": "none"});
+                });
+            });
+            x
 
-  window.onclick = function(event){
-    if(event.target == $('.myModal')){
-      $('.myModal').style.display = "none";
-    }
-  }
+            window.onclick = function (event) {
+                if (event.target == $('.myModal')) {
+                    $('.myModal').style.display = "none";
+                }
+            }
 
-});
+        });
 
-</script>
+    </script>
 {% endblock %}

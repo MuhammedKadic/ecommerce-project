@@ -22,6 +22,7 @@ class OrderStatus(Enum):
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    item_id = db.Column(db.Integer, nullable=False)
     assoID = db.Column(db.Integer, nullable=False)
     price = db.Column(db.String(50), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
@@ -29,7 +30,8 @@ class Cart(db.Model):
     size = db.Column(db.String(255), nullable=False)
     name = db.Column(db.String(50), nullable=False)
 
-    def __init__(self, assoID, price, quantity,size, dateStarted, name):
+    def __init__(self,item_id, assoID, price, quantity,size, dateStarted, name):
+        self.item_id = item_id
         self.assoID = assoID
         self.price = price
         self.quantity = quantity
@@ -80,26 +82,27 @@ db.session.commit()  # This commit's all the changes
 def updateCart():
     if "loggedIN" not in session:
         return redirect(url_for('login'))
-    carts = Cart.query.all()
 
     itemsFound = Cart.query.filter_by(assoID=session['userID'])
     if 'userID' in session:
         for items in itemsFound:
-            if items.id == request.form.get('item_id'):
+            if items.item_id == int(request.form.get('item_id')):
                 if items.size != request.form.get('size'):
-                    db.session.add(Cart(session['userID'], "35.00", request.form.get('quantity'), datetime.datetime.today(), request.form.get('size'), "PRODUCTEXAMPLE"))
-                    print('PRODUCT EXISTED BUT SIZES WHERE DIFFERENT CREATING NEW PRODUCT')
+                    # Add's new item to cart because of the new size selection
+                    db.session.add(
+                        Cart(request.form.get('item_id'), session['userID'], "35.00", request.form.get('quantity'),
+                             request.form.get('size'), datetime.datetime.today(), "PRODUCTEXAMPLE"))
+                    db.session.commit()
                     return jsonify({'result': 'addedNewItem'})
                 else:
-                    print('PRODUCT EXISTS IN CART UPDATING QUANTITY')
+                    # Updates the quantity if the size's are the same
                     items.quantity = request.form.get('quantity')
                     db.session.commit()
                     return jsonify({'result': 'updatedQuantity'})
-            return jsonify({'result': 'success'})
 
-        db.session.add(Cart(session['userID'], "35.00", request.form.get('quantity'), request.form.get('size'), datetime.datetime.today(), "PRODUCTEXAMPLE"))
+        # This line below runs if the item is not in the cart essentially creating a brand new item in the cart
+        db.session.add(Cart(request.form.get('item_id'), session['userID'], "35.00", request.form.get('quantity'), request.form.get('size'), datetime.datetime.today(), "PRODUCTEXAMPLE"))
         db.session.commit()
-        print('PRODUCT DID NOT EXIST')
         return jsonify({'result': 'addedNewItem'})
     return jsonify({'result': 'failure'})
 
@@ -176,6 +179,7 @@ def register():
     if request.method == "POST":
         db.session.add(User(request.form.get('username'), request.form.get('email'), request.form.get("password"), datetime.datetime.today(), []))
         db.session.commit()
+        return redirect(url_for('login'))
     return render_template("authentication/register.html")
 
 
