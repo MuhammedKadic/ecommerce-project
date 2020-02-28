@@ -2,16 +2,203 @@
 {% block title %} Home {% endblock %}
 {% block head %}
     {{ super() }}
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        /**
+     * The CSS shown here will not be introduced in the Quickstart guide, but shows
+     * how you can use CSS to style your Element's container.
+     */
+        .StripeElement {
+            box-sizing: border-box;
 
+            height: 40px;
+
+            padding: 10px 12px;
+
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background-color: white;
+
+            box-shadow: 0 1px 3px 0 #e6ebf1;
+            -webkit-transition: box-shadow 150ms ease;
+            transition: box-shadow 150ms ease;
+        }
+
+        .StripeElement--focus {
+            box-shadow: 0 1px 3px 0 #cfd7df;
+        }
+
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
-<h1 style="text-align: center">CART</h1>
+    <h1 style="text-align: center">CART</h1>
+    <p style="text-align: center">Free shipping starts at $80+</p>
+    <table class="table" style="margin-right:auto;margin-left:auto;width:55%;">
+        <thead>
+        <tr>
+            <th scope="col" style="width:65%">Product</th>
+            <th scope="col">Size</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr class="">
+                <th scope="row">{{ item.name }}</th>
+                <td>{{ item.size }}</td>
+                <td><select class="form-control updateQuantity {{ item.id }}-{{ item.size }}-custom"
+                            size="{{ item.size }}"
+                            cart_item="{{ item.id }}"
+                            session="{{ session['userID'] }}">
+                    {% for quantity in range(1, 16) %}
+                        {% if quantity == item.quantity %}
+                            <option value="{{ quantity }}" selected>{{ quantity }}</option>
+                        {% else %}
+                            <option value="{{ quantity }}">{{ quantity }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                    <a href="" class="removeFromCart" cart_item="{{ item.id }}" session="{{ session['userID'] }}"
+                       size="{{ item.size }}" style="text-align: center;">Remove</a>
+                </td>
+                <td id="{{ item.id }}-{{ item.size }}-price">${{ item.price }}</td>
+            </tr>
+
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td style="font-weight: 700;">SubTotal</td>
+            <td id="price-subtotal">${{ SubTotal }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td style="font-weight: 700;">Tax</td>
+            <td id="price-tax">${{ Tax }}</td>
+        </tr>
+        <tr style="width:10%">
+            <td></td>
+            <td></td>
+            <td style="font-weight: 700;">Total</td>
+            <td id="price-total">${{ CaluclatedPrice }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-xl">
+                    Checkout
+                </button>
+            </td>
+        </tbody>
+    </table>
+
+    <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/charge" method="post" id="payment-form">
+                        <div class="form-row">
+                            <label for="card-element">
+                                Credit or debit card
+                            </label>
+                            <div id="card-element">
+                                <!-- A Stripe Element will be inserted here. -->
+                            </div>
+
+                            <!-- Used to display form errors. -->
+                            <div id="card-errors" role="alert"></div>
+                        </div>
+
+                        <button>Submit Payment</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
 {% endblock %}
 
 
 {% block scripts %}
     <script>
+        $('.removeFromCart').on('click', function () {
+
+            let item_id = $(this).attr('cart_item');
+            let session_id = $(this).attr('session');
+            let size = $(this).attr('size');
+
+
+            req = $.ajax({
+                url: '/removeFromCart',
+                type: 'POST',
+                data: {
+                    item_id: item_id,
+                    session: session_id,
+                    size: size,
+                },
+                success: function (data) {
+                    $(this).style.display = "none";
+                    $('#price-total').html("$" + data.CaluclatedPrice);
+                    $('#price-tax').html("$" + data.TotalTaxCaluclated);
+                    $('#price-subtotal').html("$" + data.Subtotal);
+                    $(this).trigger('create');//To refresh the page content on success call back
+                }
+            });
+        });
+
+        $('.updateQuantity').on('change', function () {
+
+            let item_id = $(this).attr('cart_item');
+            let session_id = $(this).attr('session');
+            let size = $(this).attr('size');
+            let quantity = $('.' + item_id + "-" + size + '-custom').val();
+
+
+            req = $.ajax({
+                url: '/quantityUpdateToCart',
+                type: 'POST',
+                async: true,
+                data: {
+                    item_id: item_id,
+                    session: session_id,
+                    size: size,
+                    quantity: quantity
+                },
+                success: function (data) {
+                    $('#' + item_id + '-' + size + '-price').html("$" + data.newPrice);
+                    $('#price-total').html("$" + data.CaluclatedPrice);
+                    $('#price-tax').html("$" + data.TotalTaxCaluclated);
+                    $('#price-subtotal').html("$" + data.Subtotal);
+
+
+                }
+            });
+        });
+
     </script>
 {% endblock %}
 
